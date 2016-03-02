@@ -1,5 +1,5 @@
 {
-  "name": "pulsar-input-keyboard",
+  "name": "@dermah/pulsar-input-keyboard",
   "version": "0.1.0",
   "description": "Transmit pulses using nothing but terminal and keyboard",
   "main": "index.js",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Dermah/pulsar-input-keyboard/issues"
   },
-  "homepage": "https://github.com/Dermah/pulsar-input-keyboard#readme"
+  "homepage": "https://github.com/Dermah/pulsar-input-keyboard#readme",
+  "dependencies": {
+    "jsonfile": "^2.2.3"
+  }
 }
