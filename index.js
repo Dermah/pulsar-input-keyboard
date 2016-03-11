@@ -1,1 +1,1 @@
-module.exports = require('./key-processor.js');
+module.exports = require('./src/key-processor.js');
