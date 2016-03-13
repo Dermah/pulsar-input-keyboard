@@ -12,11 +12,10 @@ where `io` is a socket.io instance and config is the same object you're giving [
 
 ## Capabilities
 
-This thing:
-* takes control of the console so that key presses trigger
-    * pulse emissions
-    * timed pulse emissions
-    * combinations or pulse emission
-    * music playback
-    * keylogging to file of all future keypresses
-    * playback of keylog files
+This thing takes control of the console so that key presses trigger
+* pulse emissions
+* timed pulse emissions
+* combinations or pulse emission
+* music playback
+* keylogging to file of all future keypresses
+* playback of keylog files
