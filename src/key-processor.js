@@ -21,6 +21,14 @@ var Processor = function (socketio, configuration) {
   config = configuration;
   song = new music(config.songPath);
   player.on( 'press', this.process);
+
+  // Set up keypress detection in stdin
+  var stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.resume();
+  stdin.setEncoding('utf8');
+
+  stdin.on( 'data', this.process);
 }
 
 Processor.prototype.process = function( key ){
