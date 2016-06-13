@@ -17,11 +17,10 @@ var song;
 var config;
 
 class KeyboardEmitter extends EventEmitter {
-  constructor (socketio, configuration) {
+  constructor (configuration) {
     super();
 
-    io = socketio;
-    combo = new Combos(io);
+    combo = new Combos(this);
     config = configuration;
     song = new music(config.songPath);
     player.on( 'press', this.process);
@@ -32,7 +31,7 @@ class KeyboardEmitter extends EventEmitter {
     stdin.resume();
     stdin.setEncoding('utf8');
 
-    stdin.on( 'data', this.process);
+    stdin.on('data', (data) => this.process(data));
   }
 
   process (key) {
@@ -54,12 +53,12 @@ class KeyboardEmitter extends EventEmitter {
       combo.randomFlash(currentTarget);
     } else if ( key === 'b') {
       console.log("PULSAR: Sending ball...");
-      io.emit('pulse', {
+      this.emit('pulse', {
         name: 'ball'
       });
     } else if ( key === 'w') {
       console.log("PULSAR: Sending long ball...");
-      io.emit('pulse', {
+      this.emit('pulse', {
         name: 'ball',
         totalFrames: 100
       });
@@ -67,7 +66,7 @@ class KeyboardEmitter extends EventEmitter {
       console.log();
       console.log("PULSAR REBOOTING");
       console.log();
-      io.emit('pulsar control', {action: "reboot"});
+      this.emit('pulsar control', {action: "reboot"});
     } else if ( key === '0' ) {
       combo.flashRow(4);
     } else if ( key === '1' ) {
@@ -80,12 +79,12 @@ class KeyboardEmitter extends EventEmitter {
       combo.flashUp(200);
     } else if ( key === 's' ) {
       console.log("PULSAR: Sending starburst ****");
-      io.emit('pulse', {
+      this.emit('pulse', {
         name: 'starburst',
       });
     } else if ( key === 'l' ) {
       console.log("PULSAR: Sending gloc");
-      io.emit('pulse', {
+      this.emit('pulse', {
         name: 'bars',
         h: 0.33,
         w: 1,
@@ -111,7 +110,7 @@ class KeyboardEmitter extends EventEmitter {
         pulse.target = currentTarget;
       }
       console.log("PULSAR: Strobing");
-      io.emit('pulse', pulse);
+      this.emit('pulse', pulse);
     } else if ( key === '}' ) {
       console.log("PULSAR: Starting timer");
       recorder.startTimer();
@@ -154,7 +153,7 @@ class KeyboardEmitter extends EventEmitter {
     } else if (key === '/' ) {
       astronautOn = true;
     } else if (key === 'J' ) {
-      io.emit('pulse', {
+      this.emit('pulse', {
         name: 'slider',
         r: 255,
         g: 0,
@@ -164,7 +163,7 @@ class KeyboardEmitter extends EventEmitter {
       });
     } else if (key === '\b' ) {
       console.log("PULSAR: Delete all drawings");
-      io.emit('pulsar control', {action: "clear"});
+      this.emit('pulsar control', {action: "clear"});
     } else if (key === '3' ) {
       console.log("Row 4 only");
       currentTarget = {row: 4};
@@ -204,7 +203,7 @@ class KeyboardEmitter extends EventEmitter {
       if (currentTarget) {
         pulse.target = currentTarget;
       }
-      io.emit('pulse', pulse);
+      this.emit('pulse', pulse);
     }
   }
 }
