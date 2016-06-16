@@ -1,6 +1,6 @@
-var io;
-var Combos = function (theIO) {
-  io = theIO;
+var pulsar;
+var Combos = function (pulsarEmitter) {
+  pulsar = pulsarEmitter;
 };
 
 Combos.prototype.randomFlash = function(target) {
@@ -14,11 +14,11 @@ Combos.prototype.randomFlash = function(target) {
   if (target) {
     pulse.target = target;
   }
-  io.emit('pulse',  pulse);
+  pulsar.emit('pulse',  pulse);
 }
 
 Combos.prototype.flashRow = function(row) {
-  io.emit('pulse', {
+  pulsar.emit('pulse', {
     name: 'flash',
     target: {
       row: row
@@ -27,7 +27,7 @@ Combos.prototype.flashRow = function(row) {
 }
 
 Combos.prototype.flashColumn = function(column) {
-  io.emit('pulse', {
+  pulsar.emit('pulse', {
     name: 'flash',
     target: {
       col: column
@@ -69,7 +69,7 @@ Combos.prototype.atmospheric = function (length, target) {
     if (target) {
       pulse.target = target;
     }
-    io.emit('pulse', pulse);
+    pulsar.emit('pulse', pulse);
   };
   emitall();
   var atmos = setInterval(emitall, 40)
@@ -97,7 +97,7 @@ Combos.prototype.glock3 = function (note, target) {
     pulse.target = target;
   }
 
-  io.emit('pulse', pulse);
+  pulsar.emit('pulse', pulse);
 }
 
 Combos.prototype.slideUpDouble = function (frames, target) {
@@ -114,7 +114,7 @@ Combos.prototype.slideUpDouble = function (frames, target) {
   }
   var emitter = function(frames) {
     pulse.totalFrames = frames;
-    io.emit('pulse', pulse);
+    pulsar.emit('pulse', pulse);
   }
 
   emitter(22);
@@ -137,7 +137,7 @@ Combos.prototype.calmBeforeStorm = function (target) {
     pulse.target = target;
   }
 
-  io.emit('pulse', pulse);
+  pulsar.emit('pulse', pulse);
 }
 
 Combos.prototype.space = function(astronaut, starSize, target) {
@@ -150,7 +150,7 @@ Combos.prototype.space = function(astronaut, starSize, target) {
     pulse.randomColour = 3;
     pulse.strokeSize = starSize;
   }
-  io.emit('pulse', pulse);
+  pulsar.emit('pulse', pulse);
   if (astronaut) {
     var pulse = {
       name: 'astronaut',
@@ -162,7 +162,7 @@ Combos.prototype.space = function(astronaut, starSize, target) {
     if (target) {
       pulse.target = target;
     }
-    io.emit('pulse', pulse);
+    pulsar.emit('pulse', pulse);
     astronaut = false;
   }
 }
@@ -184,7 +184,7 @@ Combos.prototype.spaceUpdate = function (cols, rows, astronaut, shake, scale, ta
 
     console.log(height);
   }
-  io.emit('pulse update', pulse);
+  pulsar.emit('pulse update', pulse);
   var height = rotationY;
   if (astronaut) {
     var pulse = {
@@ -193,10 +193,10 @@ Combos.prototype.spaceUpdate = function (cols, rows, astronaut, shake, scale, ta
     if (target) {
       pulse.target = target;
     }
-    io.emit('pulse', pulse);
+    pulsar.emit('pulse', pulse);
     astronaut = false;
   }
-  io.emit('pulse update', {
+  pulsar.emit('pulse update', {
     name: 'astronaut',
     rotationX: rotationX,
     rotationY: height,
@@ -212,8 +212,8 @@ Combos.prototype.spaceNaut = function () {
   var pulse = {
     name: 'starburst',
   }
-  io.emit('pulse', pulse);
-  io.emit('pulse', {
+  pulsar.emit('pulse', pulse);
+  pulsar.emit('pulse', {
     name: 'astronaut',
     rotationX: 600,
     rotationY: 200,
